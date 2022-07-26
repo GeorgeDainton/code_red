@@ -13,7 +13,7 @@ router.route('/add').post((req, res) => {
   const catagory = req.body.catagory;
   const priority = Number(req.body.priority);
   const date = Date.parse(req.body.date);
-  const deadline = Date.parse(req.body.deadline);
+  // const deadline = Date.parse(req.body.deadline);
 
   const newTodo = new Todo({
     username,
@@ -21,12 +21,14 @@ router.route('/add').post((req, res) => {
     catagory,
     priority,
     date,
-    deadline,
+    // deadline,
   });
 
   newTodo.save()
     .then(() => res.json('To Do added'))
     .catch(err => res.status(400).json('Error:' + err));
 });
+
+
 
 module.exports = router;

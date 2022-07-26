@@ -8,7 +8,7 @@ const todoSchema = new Schema({
   catagory: { type: String, required: false },
   priority: { type: Number, required: true },
   date: { type: Date, required: true},
-  deadline: { type: Date, required: false},
+  // deadline: { type: Date, required: false},
   },  {
     timestamps: true,
 });
