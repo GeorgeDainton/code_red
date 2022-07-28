@@ -1,13 +1,14 @@
 const router = require('express').Router();
-let Todo = require('../models/todo.model')
+const Todo = require('../models/todo.model')
+const { isLoggedIn } = require("./middleware"); // import isLoggedIn custom middleware
 
-router.route('/').get((req, res) => {
+router.route('/').get(isLoggedIn, (req, res) => {
   Todo.find() // built in mongoose method
     .then(todo => res.json(todo)) //if successful, take the res(ult) whcih can be called anything, and send it as json
     .catch(err => res.status(400).json('Error: ' + err)); //in error, send as json
 })
 
-router.route('/add').post((req, res) => {
+router.route('/add').post(isLoggedIn, (req, res) => {
   const username = req.body.username;
   const description = req.body.description;
   const catagory = req.body.catagory;
@@ -29,19 +30,19 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(isLoggedIn, (req, res) => {
   Todo.findById(req.params.id) //not req.body as this is input by the user, params are from the URL, using to find by ID
     .then(todo => res.json(todo))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
+router.route('/:id').delete(isLoggedIn, (req, res) => {
   Todo.findByIdAndDelete(req.params.id)
     .then(() => res.json('To Do deleted'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) => {
+router.route('/update/:id').post(isLoggedIn, (req, res) => {
   Todo.findById(req.params.id)
     .then(todo => {
       todo.username = req.body.username;
