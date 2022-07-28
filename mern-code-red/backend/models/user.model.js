@@ -23,7 +23,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  },
+  }, // todo schema to be added
 },  {
   timestamps: true,
 });
