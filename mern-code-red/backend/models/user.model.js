@@ -10,6 +10,19 @@ const userSchema = new Schema({
     trim: true,
     minlength: 3
   },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: true,
+    validate: [ validator.isEmail, 'invalid email' ]
+  },
+  password: {
+    type: String,
+    required: true
+  }, // todo schema to be added
+
 },  {
   timestamps: true,
 });
