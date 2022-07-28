@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { find } = require('../models/user.model');
-let User = require('../models/user.model')
+const User = require('../models/user.model')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
@@ -44,5 +44,34 @@ router.route('/login').post(async (req, res) => {
     res.status(400).json({ error });
   }
 });
+
+
+router.route('/:id').get((req, res) => {
+  User.findById(req.params.id) //not req.body as this is input by the user, params are from the URL, using to find by ID
+    .then(todo => res.json(todo))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id').delete((req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(() => res.json('User deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/update/:id').post((req, res) => {
+  User.findById(req.params.id)
+    .then(todo => {
+      todo.username = req.body.username;
+      todo.email = req.body.email;
+      todo.password = req.body.password;
+    
+      todo.save()
+        .then(() => res.json('User updated'))
+        .catch(err => res.status(400).json('Error ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
 
 module.exports = router;
