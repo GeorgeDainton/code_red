@@ -1,5 +1,3 @@
-//import { isEmail } from 'validator';
-const validator = require('validator')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
@@ -24,6 +22,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   }, // todo schema to be added
+
 },  {
   timestamps: true,
 });
