@@ -1,4 +1,3 @@
-//import { isEmail } from 'validator';
 const validator = require('validator')
 const mongoose = require('mongoose')
 
